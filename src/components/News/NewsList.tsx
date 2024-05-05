@@ -1,25 +1,49 @@
-import { useMemo, useState } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import { isAxiosError } from 'axios';
 import { ReloadIcon } from '@radix-ui/react-icons';
 
 import { useNews } from '@/hooks';
 import { type Article } from '@/types';
 import { cn } from '@/lib/utils';
-import { Button, ErrorAlert } from '../UI';
+import { Button, ErrorAlert, Spinner } from '../UI';
 
 import { NewItem } from './NewItem';
 import { NewSkeleton } from './NewSkeleton';
 import { NewDetailsModal } from './NewDetailsModal';
 
 export const NewsList = () => {
-  const { data, isPending, error, refetch, isRefetching } = useNews();
-  const nonEmptyArticles = useMemo(
-    () =>
-      data?.articles.filter((article) => article.source.name !== '[Removed]'),
-    [data?.articles],
-  );
+  const {
+    data,
+    isPending,
+    error,
+    refetch,
+    isRefetching,
+    fetchNextPage,
+    isFetchingNextPage,
+    hasNextPage,
+  } = useNews();
 
   const [selectedNew, setSelectedNew] = useState<Article | null>(null);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollHeight =
+        window.innerHeight + document.documentElement.scrollTop + 200;
+      const offSet = document.documentElement.offsetHeight;
+
+      if (
+        scrollHeight >= offSet &&
+        !isFetchingNextPage &&
+        !isPending &&
+        hasNextPage
+      ) {
+        fetchNextPage();
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [fetchNextPage, hasNextPage, isFetchingNextPage, isPending]);
 
   if (isPending) {
     return (
@@ -41,7 +65,7 @@ export const NewsList = () => {
     return <ErrorAlert errorTitle='Error' errorMessage={errMsg} />;
   }
 
-  if (nonEmptyArticles?.length === 0) {
+  if (data.pages?.length === 0 || data.pages[0].articles.length === 0) {
     return (
       <h1 className='text-center text-3xl font-bold'>No Articles Found</h1>
     );
@@ -68,14 +92,19 @@ export const NewsList = () => {
       </Button>
 
       <ul className='space-y-6'>
-        {nonEmptyArticles?.map((article, i) => (
-          <NewItem
-            article={article}
-            key={article.title + i}
-            onClick={() => setSelectedNew(article)}
-          />
+        {data.pages.map((page, i) => (
+          <Fragment key={i}>
+            {page.articles.map((article, i) => (
+              <NewItem
+                article={article}
+                key={article.title + i}
+                onClick={() => setSelectedNew(article)}
+              />
+            ))}
+          </Fragment>
         ))}
       </ul>
+      {isFetchingNextPage && <Spinner className='mt-6' />}
     </>
   );
 };
