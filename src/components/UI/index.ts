@@ -4,3 +4,6 @@ export * from './ImageIcon';
 export * from './Dialog';
 export * from './Avatar';
 export * from './Button';
+export * from './Combobox';
+export * from './Popover';
+export * from './Command';
