@@ -1,4 +1,5 @@
 import { useQueryState } from 'nuqs';
+import { useEffect } from 'react';
 
 export const countries = [
   {
@@ -46,6 +47,17 @@ export const useNewsFilter = () => {
   const [category, setCategory] = useQueryState('category', {
     defaultValue: 'general',
   });
+
+  useEffect(() => {
+    const newsListEl = document.getElementById('news-list');
+    if (!newsListEl) return;
+
+    if (country === 'ae') {
+      newsListEl.dir = 'rtl';
+    } else {
+      newsListEl.dir = 'ltr';
+    }
+  }, [country]);
 
   return {
     country: country === '' ? 'us' : country,
