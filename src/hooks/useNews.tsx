@@ -2,22 +2,29 @@ import { useInfiniteQuery } from '@tanstack/react-query';
 
 import { axiosInstance } from '@/lib/axios';
 import { NewsResponse } from '@/types';
+import { type UseNewsFilterReturnType } from './useNewsFilter';
 
-const fetchNews = async (page: number) => {
+const fetchNews = async ({
+  pageParam,
+  filter,
+}: {
+  pageParam: number;
+  filter: Partial<UseNewsFilterReturnType>;
+}) => {
   const results = await axiosInstance.get<NewsResponse>('/top-headlines', {
     params: {
-      country: 'us',
-      page,
+      page: pageParam,
+      ...filter,
     },
   });
 
   return results.data;
 };
 
-const useNews = () => {
+const useNews = (filter: Partial<UseNewsFilterReturnType>) => {
   return useInfiniteQuery({
-    queryKey: ['news'],
-    queryFn: ({ pageParam = 1 }) => fetchNews(pageParam),
+    queryKey: ['news', filter],
+    queryFn: ({ pageParam = 1 }) => fetchNews({ pageParam, filter }),
     getNextPageParam: (lastPage, allPages) => {
       if (
         lastPage.totalResults > allPages.flatMap((page) => page.articles).length

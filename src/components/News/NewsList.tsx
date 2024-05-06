@@ -2,7 +2,7 @@ import { Fragment, useEffect, useState } from 'react';
 import { isAxiosError } from 'axios';
 import { ReloadIcon } from '@radix-ui/react-icons';
 
-import { useNews } from '@/hooks';
+import { useNews, useNewsFilter } from '@/hooks';
 import { type Article } from '@/types';
 import { cn } from '@/lib/utils';
 import { Button, ErrorAlert, Spinner } from '../UI';
@@ -10,8 +10,11 @@ import { Button, ErrorAlert, Spinner } from '../UI';
 import { NewItem } from './NewItem';
 import { NewSkeleton } from './NewSkeleton';
 import { NewDetailsModal } from './NewDetailsModal';
+import { NewsFilter } from './NewsFilter';
 
 export const NewsList = () => {
+  const filter = useNewsFilter();
+
   const {
     data,
     isPending,
@@ -21,7 +24,7 @@ export const NewsList = () => {
     fetchNextPage,
     isFetchingNextPage,
     hasNextPage,
-  } = useNews();
+  } = useNews({ country: filter.country, category: filter.category });
 
   const [selectedNew, setSelectedNew] = useState<Article | null>(null);
 
@@ -80,14 +83,14 @@ export const NewsList = () => {
         />
       )}
 
+      <NewsFilter filter={filter} />
+
       <Button
-        className='mb-4'
+        className='my-4 gap-1'
         disabled={isRefetching}
         onClick={() => refetch()}
       >
-        <ReloadIcon
-          className={cn('w-4 h-4 mr-1', isRefetching && 'animate-spin')}
-        />
+        <ReloadIcon className={cn('w-4 h-4', isRefetching && 'animate-spin')} />
         Refresh
       </Button>
 
