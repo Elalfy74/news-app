@@ -54,9 +54,9 @@
 [![News App](assets/nuqs.png)](https://github.com/Elalfy74/news-app/tree/pagination-and-filtering)
 [![News App](assets/pagination.png)](https://github.com/Elalfy74/news-app/tree/pagination-and-filtering)
 
-- Utilized Nuqs to make use of URL parameters as state
+- Utilized Nuqs library to make use of URL parameters as state
 - User can filter news by category and country using Combobox
-- Utilized Tanstack Infinite Query to make use of pagination
+- Utilized Tanstack Infinite Query to implement pagination
 - User can see more news by scrolling down
 
 ## Getting Started
@@ -70,17 +70,27 @@
 ### Installation
 
 1. Clone the repo
+
    ```sh
    git clone https://github.com/Elalfy74/news-app
    ```
-2. Install NPM packages
+
+2. Switch to the project directory
+   ```sh
+   cd news-app
+   ```
+3. Switch branch to 'pagination-and-filtering'
+   ```sh
+   git checkout pagination-and-filtering
+   ```
+4. Install NPM packages
    ```sh
    npm i
    ```
-3. Rename 'env.example' to 'env'
-4. Configure .env Variables
+5. Rename 'env.example' to 'env'
+6. Configure .env Variables
    replace default values with your own
-5. Start the project
+7. Start the project
    ```sh
    npm run dev
    ```
