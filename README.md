@@ -5,6 +5,7 @@
   <p align="center">
    Simple News App Built with Next.js and Tailwind CSS
     <br />
+    This is updated version which has infinite scroll pagination and filtering
     <br />
   </p>
 </div>
@@ -16,6 +17,7 @@
       <a href="#about-the-project">About The Project</a>
       <ul>
         <li><a href="#built-with">Built With</a></li>
+        <li><a href="#pagination-and-filtering">Pagination And Filtering</a></li>
       </ul>
     </li>
     <li>
@@ -31,7 +33,7 @@
 
 ## About The Project
 
-[![News App](assets/screenshot.png)](https://github.com/Elalfy74/news-app)
+[![News App](assets/screenshot2.png)](https://github.com/Elalfy74/news-app/tree/pagination-and-filtering)
 
 - News App Let the user browse latest news
 - User can see new details by clicking on the new
@@ -46,6 +48,16 @@
 ![tailwindcss](https://img.shields.io/badge/tailwindcss-0F172A?style=for-the-badge&logo=tailwindcss)
 ![shadcn/ui](https://img.shields.io/badge/shadcn/ui-000000?style=for-the-badge&logo=shadcn/ui&logoColor=white)
 ![React Query](https://img.shields.io/badge/-Tanstack%20Query-FF4154?style=for-the-badge&logo=react%20query&logoColor=white)
+
+### Pagination And Filtering
+
+[![News App](assets/nuqs.png)](https://github.com/Elalfy74/news-app/tree/pagination-and-filtering)
+[![News App](assets/pagination.png)](https://github.com/Elalfy74/news-app/tree/pagination-and-filtering)
+
+- Utilized Nuqs to make use of URL parameters as state
+- User can filter news by category and country using Combobox
+- Utilized Tanstack Infinite Query to make use of pagination
+- User can see more news by scrolling down
 
 ## Getting Started
 
