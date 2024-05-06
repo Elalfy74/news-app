@@ -5,7 +5,9 @@
   <p align="center">
    Simple News App Built with Next.js and Tailwind CSS
     <br />
+    This is minium version which list the latest news and new details
     <br />
+    Here is updated version which supports pagination and filtering <a href="https://github.com/Elalfy74/news-app/tree/pagination-and-filtering">Click Here</a>
   </p>
 </div>
 
